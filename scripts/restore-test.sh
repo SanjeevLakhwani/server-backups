@@ -12,6 +12,11 @@ DEST="$(mktemp -d)"
 trap 'rm -rf "$DEST"' EXIT
 fail=0
 
+if [ "$(restic snapshots --json --latest 1 2>/dev/null | tr -d '[:space:]')" = "[]" ]; then
+  echo "No snapshots yet: run a backup first (just run-foreground)."
+  exit 1
+fi
+
 echo "→ Restoring latest snapshot to $DEST"
 restic restore latest --target "$DEST" >/dev/null
 
