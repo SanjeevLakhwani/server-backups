@@ -7,7 +7,8 @@ default:
 
 # Create the encrypted restic repository in the e2 bucket (once)
 init:
-    @test -s "${RESTIC_PASSWORD_FILE}" || { echo "Create ${RESTIC_PASSWORD_FILE} first (see README)"; exit 1; }
+    @test -n "${AWS_ACCESS_KEY_ID:-}" || { echo "AWS_ACCESS_KEY_ID is empty: fill in .env first"; exit 1; }
+    @test -s "${RESTIC_PASSWORD_FILE}" || { echo "No password file at '${RESTIC_PASSWORD_FILE}' (RESTIC_PASSWORD_FILE in .env)"; exit 1; }
     restic init
 
 # Install + enable the nightly systemd timer (needs sudo)
