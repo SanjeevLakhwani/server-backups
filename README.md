@@ -51,6 +51,7 @@ For monitoring, create a check on [healthchecks.io](https://healthchecks.io) (pe
 | `just stats` | Repository size |
 | `just check` | Integrity check (`just check --read-data` downloads everything) |
 | `just restore-test` | Restore latest to a temp folder and verify it |
+| Progress during a run | Printed once a minute; `sudo kill -USR1 $(pgrep -x restic)` prints it now |
 | `just unlock` | Clear a stale lock after a killed run |
 | `just install` | Install/refresh the systemd service + timer |
 

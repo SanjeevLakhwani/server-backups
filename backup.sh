@@ -96,6 +96,9 @@ for f in "$BASE_WEBSITE_DIR/.env" "${PAPERLESS_DIR:+$PAPERLESS_DIR/.env}" \
 done
 
 echo "→ restic: backing up ${#PATHS[@]} paths"
+# Output goes through tee/journald, not a terminal, so restic would otherwise
+# stay silent until done. Print a progress line every minute instead.
+export RESTIC_PROGRESS_FPS="${RESTIC_PROGRESS_FPS:-0.0167}"
 printf '   %s\n' "${PATHS[@]}"
 restic backup --tag nightly --no-scan "${PATHS[@]}"
 
