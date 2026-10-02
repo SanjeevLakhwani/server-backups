@@ -27,7 +27,8 @@ openssl rand -base64 32 > restic-password && chmod 600 restic-password
 #   → save the password AND the e2 keys in your password manager now
 
 just init                                    # creates the encrypted repo in the bucket
-tmux new -s backup 'just run-foreground'     # first run: uploads everything, can take hours
+tmux new -s backup                           # first run can take hours; then inside tmux:
+just run-foreground 2>&1 | tee ~/backup-first-run.log
 just restore-test                            # prove it can be restored
 just install                                 # enable the nightly timer
 ```
