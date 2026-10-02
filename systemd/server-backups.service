@@ -1,0 +1,11 @@
+[Unit]
+Description=Nightly server backup to IDrive e2 (restic)
+Wants=network-online.target docker.service
+After=network-online.target docker.service
+
+[Service]
+Type=oneshot
+ExecStart=@REPO@/backup.sh
+# Keep the server responsive while backing up
+Nice=10
+IOSchedulingClass=idle
